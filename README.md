@@ -1,7 +1,7 @@
 sstp-tools
 ==========
 
-#### SSTP Info
+### SSTP Info
 Current implementations:
   * Microsoft Windows (Server 2008/Server 2012)
   * MikroTik RouterOS
@@ -10,9 +10,9 @@ Further information:
   * http://msdn.microsoft.com/en-us/library/cc247338.aspx
   * http://support.microsoft.com/kb/947054
 
-#### Nmap NSE Scripts
+### Nmap NSE Scripts
 
-##### sstp-discover.nse
+#### sstp-discover.nse
 Check if SSTP is supported.
 
 Sample output:
