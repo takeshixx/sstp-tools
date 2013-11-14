@@ -21,7 +21,7 @@ Info about the default URI (ServerUri): http://support.microsoft.com/kb/947054
 -- |   Server: Microsoft-HTTPAPI/2.0
 -- |_  Timestamp: Fri, 01 Nov 2013 09:43:14 GMT
 
-author = "takeshix"
+author = "Niklaus Schiess"
 
 categories = {'safe', 'discovery'}
 
