@@ -16,7 +16,9 @@ Further information:
   * http://msdn.microsoft.com/en-us/library/cc247338.aspx
   * http://support.microsoft.com/kb/947054
 
-### Nmap sstp-discover.nse Script
+### Nmap Scripts
+
+#### sstp-discover.nse
 This script can be used to check if SSTP is supported on a given host (checks only port 443).
 
 Sample output:
@@ -49,9 +51,8 @@ Not yet supported control messages:
   * SSTP_MSG_ECHO_REQUEST
   * SSTP_MSG_ECHO_RESPONSE
 
-#### sstp-negotiation.py Test Script
-
-This script executes three steps in order to establish the SSTP layer:
+#### sstp-negotiation.py
+This is a test script that executes three steps in order to establish the SSTP layer:
   * Creating of a SSL socket
   * HTTP layer negotiation
   * SSTP layer negotiation
