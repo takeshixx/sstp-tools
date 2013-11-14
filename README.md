@@ -2,9 +2,15 @@ sstp-tools
 ==========
 
 ### SSTP Info
-Current implementations:
+Current server implementations:
   * Microsoft Windows (Server 2008/Server 2012)
   * MikroTik RouterOS
+
+Current client implementations:
+  * Microsoft Windows (>Vista SP1 & Server 2008/Server 2012)
+  * MikroTik RouterOS
+  * sstp-client (http://sstp-client.sourceforge.net/)
+  * SSToPer (https://github.com/hugsy/sstoper)
 
 Further information:
   * http://msdn.microsoft.com/en-us/library/cc247338.aspx
@@ -46,8 +52,8 @@ Not yet supported control messages:
 #### sstp-negotiation.py Test Script
 
 This script executes three steps in order to establish the SSTP layer:
-    * Creating of a SSL socket
-    * HTTP layer negotiation
-    * SSTP layer negotiation
+  * Creating of a SSL socket
+  * HTTP layer negotiation
+  * SSTP layer negotiation
 
 Note: This code is highly experimental!
