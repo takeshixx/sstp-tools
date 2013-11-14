@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+# author: takeshix@adversec.com
 import ssl, socket
 from sstp import *
 

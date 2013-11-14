@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+# author: takeshix@adversec.com
 from scapy.packet import *
 from scapy.fields import *
 
