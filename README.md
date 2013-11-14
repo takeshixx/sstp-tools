@@ -43,7 +43,7 @@ Not yet supported control messages:
   * SSTP_MSG_ECHO_REQUEST
   * SSTP_MSG_ECHO_RESPONSE
 
-##### sstp-negotiation.py Test Script
+#### sstp-negotiation.py Test Script
 
 This script executes three steps in order to establish the SSTP layer:
     * Creating of a SSL socket
