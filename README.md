@@ -1,6 +1,12 @@
 sstp-tools
 ==========
 
+This is a small collection of tools for the Secure Socket Tunneling Protocol. Most parts will be (and may stay) highly experimental.
+
+Todo:
+  * Scapy template (partially done)
+  * Dizzy template (tbd)
+
 ### SSTP Info
 Current server implementations:
   * Microsoft Windows (Server 2008/Server 2012)
@@ -15,6 +21,29 @@ Current client implementations:
 Further information:
   * http://msdn.microsoft.com/en-us/library/cc247338.aspx
   * http://support.microsoft.com/kb/947054
+
+### SSTP Protocol Layers
+   +-------------------+
+   |                   |
+   |       PPP         |
+   |                   |
+   +-------------------+
+   |                   |
+   |       SSTP        |
+   |                   |
+   +-------------------+
+   |                   |
+   |       HTTP        |
+   |                   |
+   +-------------------+
+   |                   |
+   |       SSL         |
+   |                   |
+   +-------------------+
+   |                   |
+   |      TCP/IP       |
+   |                   |
+   +-------------------+
 
 ### Nmap Scripts
 
@@ -36,7 +65,7 @@ PORT    STATE SERVICE
 |_  timestamp: Fri, 01 Nov 2013 09:45:01 GMT
 ```
 
-### Scapy Templates
+### Scapy Template
 
 Scapy SSTP layer, currently implemented control messages:
   * SSTP_MSG_CALL_CONNECT_REQUEST
