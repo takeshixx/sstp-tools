@@ -23,6 +23,7 @@ Further information:
   * http://support.microsoft.com/kb/947054
 
 ### SSTP Protocol Layers
+```
    +-------------------+
    |                   |
    |       PPP         |
@@ -44,6 +45,7 @@ Further information:
    |      TCP/IP       |
    |                   |
    +-------------------+
+```
 
 ### Nmap Scripts
 
