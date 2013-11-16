@@ -74,6 +74,10 @@ Scapy SSTP layer, currently implemented control messages:
   * SSTP_MSG_CALL_CONNECT_ACK
   * SSTP_MSG_CALL_CONNECT_NAK
   * SSTP_MSG_CALL_ABORT
+  * SSTP_MSG_CALL_DISCONNECT
+  * SSTP_MSG_CALL_DISCONNECT_ACK
+  * SSTP_MSG_ECHO_REQUEST
+  * SSTP_MSG_ECHO_RESPONSE
 
 Not yet supported control messages:
   * SSTP_MSG_CALL_CONNECTED
