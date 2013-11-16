@@ -1,5 +1,3 @@
-#!/usr/bin/env python2
-# author: takeshix@adversec.com
 from scapy.packet import *
 from scapy.fields import *
 
@@ -9,17 +7,16 @@ class SSTPLenField(BitField):
 
     def i2m(self,pkt,x):
         if x is None:
-            return len(pkt.__dict__['payload']) + 4 # ugly hack, adding header length
+            return len(pkt.__dict__['payload']) + 4
         return x
 
-class SSTPNAKLenField(BitField):
+class SSTPInnerLenField(BitField):
     def __init__(self,name,default,size):
         BitField.__init__(self,name,default,size)
 
     def i2m(self,pkt,x):
         if x is None:
             return len(pkt.__dict__['payload']) + 12
-
         return x
 
 
@@ -52,6 +49,8 @@ _SSTP_control_message_types = {
     0x0003:'SSTP_MSG_CALL_CONNECT_NAK',
     0x0004:'SSTP_MSG_CALL_CONNECTED',
     0x0005:'SSTP_MSG_CALL_ABORT',
+    0x0006:'SSTP_MSG_CALL_DISCONNECT',
+    0x0007:'SSTP_MSG_CALL_DISCONNECT_ACK',
     0x0008:'SSTP_MSG_ECHO_REQUEST',
     0x0009:'SSTP_MSG_ECHO_RESPONSE'
 }
@@ -126,16 +125,12 @@ class SSTP_MSG_CALL_CONNECT_NAK(Packet):
         XByteField('reserved1',0x00),
         ByteEnumField('attribute_id',0x02,_SSTP_attribute_ids),
         BitField('reserved_len1',0,4),
-        SSTPNAKLenField('lengthpacket1',None,12),
+        SSTPInnerLenField('lengthpacket1',None,12),
         BitField('reserved2',0x00,24),
         ByteEnumField('attribid',None,_SSTP_attribute_ids),
         BitEnumField('status',None,32,_SSTP_abort_status),
         # max 64 byte attribvalue, tbd
     ]
-
-class SSTP_MSG_CALL_CONNECTED(Packet):
-    name = 'Call Connected Message'
-
 
 class SSTP_MSG_CALL_ABORT(Packet):
     name = 'SSTP CALL ABORT Message'
@@ -144,10 +139,49 @@ class SSTP_MSG_CALL_ABORT(Packet):
         ByteField('reserved1',0),
         ByteEnumField('attribute_id',0,_SSTP_attribute_ids),
         ShortField('length',0x14),
-        BitField('reserved2',0x00,24),
+        X3BytesField('reserved2',0),
         XByteField('attribid',0),
         BitEnumField('status',None,32,_SSTP_abort_status),
     ]
+
+class SSTP_MSG_CALL_CONNECTED(Packet):
+    name = 'Call Connected Message'
+
+    fields_desc = [
+        ByteField('reserved1',0),
+        ByteEnumField('attribute_id',0,_SSTP_attribute_ids),
+        BitField('reserved_len1',0,4),
+        SSTPInnerLenField('lengthpacket1',None,12),
+        X3BytesField('reserved2',0),
+        ByteField('hash_protocol_bitmask',0x02),
+        XBitField('none',None,256),
+        XBitField('client_hash',None,160), # SHA1:160,SHA256:256
+        BitField('padding',0x00,96), # SHA1:96,SHA256:0 
+        XBitField('compound_mac',None,160), # SHA1:160,SHA256:256
+        BitField('padding1',0x00,96), # SHA1:96,SHA256:0 
+    ]
+
+class SSTP_MSG_CALL_DISCONNECT(Packet):
+    name = 'Call Disconnect Message'
+
+    fields_desc = [
+        ByteField('reserved1',0),
+        ByteEnumField('attribute_id',0,_SSTP_attribute_ids),
+        BitField('reserved_len1',0,4),
+        SSTPInnerLenField('lengthpacket1',None,12),
+        X3BytesField('reserved2',0),
+        ByteField('attreibid',0x00),
+        BitField('status',0x00,32)
+    ]
+
+class SSTP_MSG_CALL_DISCONNECT_ACK(Packet):
+    name = 'Call Disconnect Acknowledgment Message'
+
+class SSTP_MSG_ECHO_REQUEST(Packet):
+    name = 'Echo Request Message'
+
+class SSTP_MSG_ECHO_RESPONSE(Packet):
+    name = 'Echo Response Message'
 
 bind_layers(SSTP, SSTP_DATA_PACKET, packet_type=0x00)
 bind_layers(SSTP, SSTP_CONTROL_PACKET, packet_type=0x01)
@@ -156,3 +190,7 @@ bind_layers(SSTP_CONTROL_PACKET, SSTP_MSG_CALL_CONNECT_ACK, message_type=0x0002)
 bind_layers(SSTP_CONTROL_PACKET, SSTP_MSG_CALL_CONNECT_NAK, message_type=0x0003)
 bind_layers(SSTP_CONTROL_PACKET, SSTP_MSG_CALL_CONNECTED, message_type=0x0004)
 bind_layers(SSTP_CONTROL_PACKET, SSTP_MSG_CALL_ABORT, message_type=0x0005)
+bind_layers(SSTP_CONTROL_PACKET, SSTP_MSG_CALL_DISCONNECT, message_type=0x0006)
+bind_layers(SSTP_CONTROL_PACKET, SSTP_MSG_CALL_DISCONNECT_ACK, message_type=0x0007)
+bind_layers(SSTP_CONTROL_PACKET, SSTP_MSG_ECHO_REQUEST, message_type=0x0008)
+bind_layers(SSTP_CONTROL_PACKET, SSTP_MSG_ECHO_RESPONSE, message_type=0x0009)

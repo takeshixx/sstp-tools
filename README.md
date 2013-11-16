@@ -77,10 +77,6 @@ Scapy SSTP layer, currently implemented control messages:
 
 Not yet supported control messages:
   * SSTP_MSG_CALL_CONNECTED
-  * SSTP_MSG_CALL_DISCONNECT
-  * SSTP_MSG_CALL_DISCONNECT_ACK
-  * SSTP_MSG_ECHO_REQUEST
-  * SSTP_MSG_ECHO_RESPONSE
 
 #### sstp-negotiation.py
 This is a test script that executes three steps in order to establish the SSTP layer:
