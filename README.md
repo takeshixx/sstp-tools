@@ -49,8 +49,8 @@ Further information:
 
 ### Nmap Scripts
 
-#### sstp-discover.nse
-This script can be used to check if SSTP is supported on a given host (checks only port 443).
+#### sstp-info.nse
+This script can be used to check if SSTP is supported on a given host.
 
 Sample output:
 ```
@@ -62,9 +62,10 @@ Host is up (0.0010s latency).
 PORT    STATE SERVICE
 443/tcp open  https
 | sstp-discover: 
-|   status: SSTP is supported!
-|   server: Microsoft-HTTPAPI/2.0
-|_  timestamp: Fri, 01 Nov 2013 09:45:01 GMT
+|   STATUS: SSTP is supported!
+|   SERVER: Microsoft-HTTPAPI/2.0
+|   TIMESTAMP: Fri, 01 Nov 2013 09:45:01 GMT
+|_  INFO: For more information, visit: http://msdn.microsoft.com/en-us/library/cc247338.aspx
 ```
 
 ### Scapy Template
