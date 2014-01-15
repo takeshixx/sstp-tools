@@ -26,7 +26,7 @@ Further information:
   * http://support.microsoft.com/kb/947054
 
 Related research:
-    * Analysis Protocol SSTP Microsoft (http://www.hsc.fr/ressources/breves/sstp.html)
+  * Analysis Protocol SSTP Microsoft (http://www.hsc.fr/ressources/breves/sstp.html)
 
 ### SSTP Protocol Layers
 ```
