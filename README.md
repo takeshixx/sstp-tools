@@ -10,17 +10,23 @@ Todo:
 ### SSTP Info
 Current server implementations:
   * Microsoft Windows (Server 2008/Server 2012)
-  * MikroTik RouterOS
+  * MikroTik RouterOS (http://wiki.mikrotik.com/wiki/Manual:Interface/SSTP)
+  * SoftEther VPN (https://github.com/SoftEtherVPN/SoftEtherVPN/tree/master/src/vpnserver)
+  * SEIL (http://www.seil.jp/support/tech/doc/function/pppac/sstp_about.html)
 
 Current client implementations:
-  * Microsoft Windows (>Vista SP1 & Server 2008/Server 2012)
+  * Microsoft Windows (>Vista SP1 & Server 2008/2012)
   * MikroTik RouterOS
+  * SoftEther VPN
   * sstp-client (http://sstp-client.sourceforge.net/)
   * SSToPer (https://github.com/hugsy/sstoper)
 
 Further information:
   * http://msdn.microsoft.com/en-us/library/cc247338.aspx
   * http://support.microsoft.com/kb/947054
+
+Related research:
+    * Analysis Protocol SSTP Microsoft (http://www.hsc.fr/ressources/breves/sstp.html)
 
 ### SSTP Protocol Layers
 ```
@@ -54,18 +60,16 @@ This script can be used to check if SSTP is supported on a given host.
 
 Sample output:
 ```
-[ ~/temp ] nmap --script sstp-discover -p443 172.24.10.30   
+[ ~/temp ] nmap --script sstp-info -p443 172.24.10.30   
 
 Starting Nmap 6.41SVN ( http://nmap.org ) at 2013-11-02 01:35 CET
 Nmap scan report for vpn1.contoso.com (172.24.10.30)
 Host is up (0.0010s latency).
 PORT    STATE SERVICE
 443/tcp open  https
-| sstp-discover: 
-|   STATUS: SSTP is supported!
-|   SERVER: Microsoft-HTTPAPI/2.0
-|   TIMESTAMP: Fri, 01 Nov 2013 09:45:01 GMT
-|_  INFO: For more information, visit: http://msdn.microsoft.com/en-us/library/cc247338.aspx
+| sstp-info: 
+|   status: SSTP is supported
+|_  info: For more information, visit: http://msdn.microsoft.com/en-us/library/cc247338.aspx
 ```
 
 ### Scapy Template

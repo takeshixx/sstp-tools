@@ -12,7 +12,9 @@ carry SSTP traffic as described in:
 
 Current SSTP server implementations:
     - Microsoft Windows (Server 2008/Server 2012)
-    - MikroTik RouterOS
+    - MikroTik RouterOS (http://wiki.mikrotik.com/wiki/Manual:Interface/SSTP)
+    - SoftEther (https://github.com/SoftEtherVPN/SoftEtherVPN/)
+    - SEIL (http://www.seil.jp)
 
 SSTP specification:
     _ http://msdn.microsoft.com/en-us/library/cc247338.aspx
@@ -34,10 +36,8 @@ categories = {'safe', 'default'}
 --@output
 -- 443/tcp open  https
 -- | sstp-info: 
--- |   STATUS: SSTP is supported!
--- |   SERVER: Microsoft-HTTPAPI/2.0
--- |   TIMESTAMP: Tue, 14 Jan 2014 23:57:32 GMT
--- |_  INFO: For more information, visit: http://msdn.microsoft.com/en-us/library/cc247338.aspx
+-- |   status: SSTP is supported.
+-- |_  info: For more information, visit: http://msdn.microsoft.com/en-us/library/cc247338.aspx
 
 -- SSTP negotiation response (Windows)
 --
@@ -53,40 +53,21 @@ categories = {'safe', 'default'}
 -- Server: MikroTik-SSTP
 -- Date: Fri, 01 Nov 2013 00:00:00 GMT
 
-portrule = shortport.port_or_service({443}, {"https"})
-
-local function buildRequest(host)
-    local hostfield, request
-
-    if host.targetname then
-       hostfield = host.targetname
-    else
-        hostfield = host.ip
-    end
-
-    request = 'SSTP_DUPLEX_POST /sra_{BA195980-CD49-458b-9E23-C84EE0ADCD75}/ HTTP/1.1\n'
-    request = request .. 'Host: ' .. hostfield .. '\n'
-    request = request .. 'SSTPCORRELATIONID: {}\n' -- This is not really necessary
-    request = request .. 'Content-Length: 18446744073709551615\n\n'
-    return request
-end
+portrule = function(host, port)
+  return shortport.http(host, port) and shortport.ssl(host, port)
+end 
+  
+local request = 'SSTP_DUPLEX_POST /sra_{BA195980-CD49-458b-9E23-C84EE0ADCD75} HTTP/1.1\r\nHost: %s\r\nSSTPCORRELATIONID: {}\r\n\r\nContent-Length: 18446744073709551615\r\n\r\n'
 
 action = function(host, port)
-    try = nmap.new_try(function() socket:close() end)
-    local socket = comm.tryssl(host,port)
-    local request = buildRequest(host)
-    try(socket:send(request))
-    local response = try(socket:receive())
-    socket:close()
     local output = stdnse.output_table()
+    local socket, response = comm.tryssl(host,port,string.format(request, host.targetname or host.ip))
+    if not socket then return nil end
+    stdnse.print_debug(1,'HTTPS layer establishment response:\n\n%s',response)
 
-    if response then
-        if string.match (response, 'HTTP/1.1 200') then
-            output.STATUS = 'SSTP is supported!'
-            output.SERVER = string.match(response, 'Server: ([%w-/.]+)')
-            output.TIMESTAMP = string.match(response, 'Date: ([%d%w-/.:, ]+)')
-            output.INFO = 'For more information, visit: http://msdn.microsoft.com/en-us/library/cc247338.aspx'
+    if string.match(response, 'HTTP/1.1 200') then
+            output.status = 'SSTP is supported.'
+            output.info = 'For more information, visit: http://msdn.microsoft.com/en-us/library/cc247338.aspx'
             return output
-        end
     end
 end
