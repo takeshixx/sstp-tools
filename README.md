@@ -56,18 +56,18 @@ Related research:
 ### Nmap Scripts
 
 #### sstp-info.nse
-This script can be used to check if SSTP is supported on a given host.
+This script can be used to check if SSTP is supported on a given host. (Included in Nmap SVN Revision 32661)
 
 Sample output:
 ```
-[ ~/temp ] nmap --script sstp-info -p443 172.24.10.30   
+[ ~/temp ] nmap --script sstp-discover -p443 172.24.10.30   
 
 Starting Nmap 6.41SVN ( http://nmap.org ) at 2013-11-02 01:35 CET
 Nmap scan report for vpn1.contoso.com (172.24.10.30)
 Host is up (0.0010s latency).
 PORT    STATE SERVICE
 443/tcp open  https
-| sstp-info: 
+| sstp-discover: 
 |   status: SSTP is supported
 |_  info: For more information, visit: http://msdn.microsoft.com/en-us/library/cc247338.aspx
 ```

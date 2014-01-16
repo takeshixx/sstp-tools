@@ -35,7 +35,7 @@ categories = {'safe', 'default'}
 --
 --@output
 -- 443/tcp open  https
--- | sstp-info: 
+-- | sstp-discover: 
 -- |   status: SSTP is supported.
 -- |_  info: For more information, visit: http://msdn.microsoft.com/en-us/library/cc247338.aspx
 
