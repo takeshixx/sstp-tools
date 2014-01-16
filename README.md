@@ -67,9 +67,7 @@ Nmap scan report for vpn1.contoso.com (172.24.10.30)
 Host is up (0.0010s latency).
 PORT    STATE SERVICE
 443/tcp open  https
-| sstp-discover: 
-|   status: SSTP is supported
-|_  info: For more information, visit: http://msdn.microsoft.com/en-us/library/cc247338.aspx
+|_sstp-discover: SSTP is supported.
 ```
 
 ### Scapy Template
