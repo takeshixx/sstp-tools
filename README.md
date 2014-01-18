@@ -55,8 +55,10 @@ Related research:
 
 ### Nmap Scripts
 
-#### sstp-info.nse
-This script can be used to check if SSTP is supported on a given host. (Included in Nmap SVN Revision 32661)
+#### sstp-discover.nse
+This script can be used to check if SSTP is supported on a given host.
+
+Included in Nmap SVN Revision 32661: http://nmap.org/nsedoc/scripts/sstp-discover.html
 
 Sample output:
 ```
